@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>JS练习测试</title>
+</head>
+
+<body>
+    <div class="main">
+        <h2>收集JS面试题测试</h2>
+        <h3 class="title">this 指向</h3>
+        <pre>
+         var name = 'xiaolong'
+         var famousPerson = {
+                name: 'sulihua',
+                otherName: {
+                    name: 'bill',
+                    showName: function() {
+                        alert(this.name)
+                    }
+                }
+            }
+         var show = famousPerson.otherName.showName
+         show(); // xiaolong 
+         famousPerson.otherName.showName() //bill
+         alert(famousPerson.name) //sulihua
+    </pre>
+        <h3 class="title">数组去重</h3>
+        <pre>
+	 arrUnique: function(arr) {
+		var b = []
+		var obj = {}
+		for (var i = 0; i < arr.length; i++) {
+			if (!obj[arr[i]]) {
+				b.push(arr[i])
+				obj[arr[i]] = 1
+				}
+			}
+		return b
+		}
+		</pre>
+        <h3 class="title">数组排序</h3>
+        <pre>
+		sortArr: function(arr) {
+			arr.sort(function(a, b) {
+				return a - b;
+			})
+		}
+		</pre>
+        <h3 class="title">浅复制（贝了基本类型的数据，而引用类型数据，复制后也是会发生引用）</h3>
+        <pre>
+		shallCopy: function() {
+			var json1 = { "a": "李鹏", "arr1": [1, 2, 3] }
+			var obj2 = {}
+			for (var i in json1) {
+				// console.log(json1[i])
+				obj2[i] = json1[i]
+			}
+			obj2.arr1.push(5);
+			console.log(obj2.arr1); //[1,2,3,5]
+			console.log(json1.arr1); //[1,2,3,5]
+		}
+	   </pre>
+        <h3 class="title">深层复制</h3>
+        <pre>
+	copy: function(obj1, obj2) {
+		var obj2 = obj2 || {}
+		for (var name in obj1) {
+			if (typeof obj1[name] === 'object') { //判断是否为对象
+				obj2[name] = (obj1[name].constructor === Array) ? [] : {}
+					// console.log(obj1[name].constructor === Array)
+				faceDemo.copy(obj1[name], obj2[name])
+			} else {
+				obj2[name] = obj1[name]
+				console.log(1)
+			}
+		}
+		return obj2
+
+		/*
+		var json1 = {
+			"name": "鹏哥",
+			"age": 18,
+			"arr1": [1, 2, 3, 4, 5],
+			"string": 'afasfsafa',
+			"arr2": [1, 2, 3, 4, 5],
+			"arr3": [{ "name1": "李鹏" }, { "job": "前端开发求职" }]
+		};
+		var json2 = {};
+		json2 = faceDemo.copy(json1, json2);
+		json1.arr1.push(8)
+		console.log(json2.arr1);
+		console.log(json1.arr1);
+		*/
+	}
+	   </pre>
+        <h3 class="title">闭包累加</h3>
+        <pre>
+	 closure: function() {
+		var a = 0
+		return function() {
+				a++
+				console.log(a)
+			}
+			/*
+				var f = faceDemo.closure()
+				f(); //1
+				f(); //2
+				f(); //3
+			*/
+	   }
+	   </pre>
+        <h3 class="title">获取cookie</h3>
+        <pre>
+	// 获取cookie
+	 getCookie: function(name) {
+		var  strCookie = document.cookie;
+		var  arrCookie = strCookie.split("; ");
+		for (var  i = 0; i < arrCookie.length; i++) {
+			var  arr = arrCookie[i].split("=");
+			if (arr[0] == name) {
+				return unescape(arr[1]);
+			} else {
+				return "";
+			}
+		}
+	}
+	   </pre>
+        <h3 class="title">字符串出现最多的是哪一个，出现多少次</h3>
+        <pre>
+	charAtcout: function(str) {
+		//console.log(str)
+		var b = {}
+		for (var i in str) {
+			if (!b[str.charAt(i)]) {
+				b[str.charAt(i)] = 1;
+			} else {
+				b[str.charAt(i)]++
+			}
+			// console.log(str.charAt(i))
+		}
+		var str2 = ''
+		var count = 0
+		for (var i in b) {
+			if (b[i] > count) {
+				str2 = i;
+				count = b[i]
+			}
+		}
+		console.log(str2) //出现最多的字符
+		console.log(count) //出现最多的次数
+	}
+		</pre>
+    </div>
+
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+        
+        body {
+            font-size: 14px;
+        }
+        
+        .main {
+            width: 1000px;
+            text-align: left;
+            margin: 0 auto
+        }
+        
+        h2 {
+            padding-top: 30px;
+        }
+        
+        .title {
+            padding: 25px 0 10px 0;
+        }
+        
+        pre {
+            color: #fff;
+            background-color: #191919;
+            padding: 20px 0px
+        }
+    </style>
+    <script src='xl.js'></script>
+</body>
+
+</html>
